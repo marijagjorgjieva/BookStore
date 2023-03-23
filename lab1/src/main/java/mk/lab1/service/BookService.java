@@ -12,19 +12,19 @@ public interface BookService {
 
     List<Book> findAll();
 
-    Book findById(Long id);
+    Optional<Book> findById(Long id);
 
-    Book findByName(String name);
+    Optional<Book> findByName(String name);
 
-    Book save(String name, Category category, Long authorId, Integer available);
+    Optional<Book> save(String name, Category category, Long authorId, Integer available);
 
-    Book save(BookDto BookDto);
+    Optional<Book> save(BookDto BookDto);
 
-    Book edit(Long id,String name, Category category, Long authorId, Integer available);
+    Optional<Book> edit(Long id,String name, Category category, Long authorId, Integer available);
 
-    Book edit(Long id, BookDto BookDto);
+    Optional<Book> edit(Long id, BookDto BookDto);
 
     void deleteById(Long id);
 
-
+    Optional<Book> markAsTaken(Long id);
 }

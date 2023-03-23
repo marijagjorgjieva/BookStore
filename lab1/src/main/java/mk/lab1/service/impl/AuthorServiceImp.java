@@ -12,6 +12,7 @@ import mk.lab1.service.CountryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorServiceImp implements AuthorService {
@@ -31,51 +32,51 @@ public class AuthorServiceImp implements AuthorService {
     }
 
     @Override
-    public Author findById(Long id) {
-        return authorRepository.findById(id).orElseThrow(AuthorIdNotVaildExcepion::new);
+    public Optional<Author> findById(Long id) {
+        return Optional.ofNullable(authorRepository.findById(id).orElseThrow(AuthorIdNotVaildExcepion::new));
     }
 
     @Override
-    public Author findByName(String name) {
-        return authorRepository.findByName(name).orElseThrow(AuthorNameNotFoundException::new);
+    public Optional<Author> findByName(String name) {
+        return Optional.ofNullable(authorRepository.findByName(name).orElseThrow(AuthorNameNotFoundException::new));
     }
 
     @Override
-    public Author save(String name, String surname, Long countryId) {
-        Country country = countryService.findById(countryId);
+    public Optional<Author> save(String name, String surname, Long countryId) {
+        Country country = countryService.findById(countryId).orElseThrow(CountryIdNotFoundException::new);
 
         this.authorRepository.deleteByName(name);
-        return this.authorRepository.save(new Author(name, surname, country));
+        return Optional.of(this.authorRepository.save(new Author(name, surname, country)));
     }
 
     @Override
-    public Author save(AuthorDto AuthorDto) {
+    public Optional<Author> save(AuthorDto AuthorDto) {
 
         this.authorRepository.deleteByName(AuthorDto.getName());
-        Country country = countryService.findById(AuthorDto.getCountry());
-        return this.authorRepository.save(new Author(AuthorDto.getName(), AuthorDto.getSurname(), country));
+        Country country = countryService.findById(AuthorDto.getCountry()).orElseThrow(CountryIdNotFoundException::new);
+        return Optional.of(this.authorRepository.save(new Author(AuthorDto.getName(), AuthorDto.getSurname(), country)));
     }
 
     @Override
-    public Author edit(Long id, String name, String surname, Long countryId) {
+    public Optional<Author> edit(Long id, String name, String surname, Long countryId) {
         Author author = this.authorRepository.findById(id).orElseThrow(AuthorIdNotVaildExcepion::new);
 
         author.setName(name);
         author.setSurname(surname);
-        author.setCountry(countryService.findById(countryId));
+        author.setCountry(countryService.findById(countryId).orElseThrow(CountryIdNotFoundException::new));
 
-        return authorRepository.save(author);
+        return Optional.of(authorRepository.save(author));
     }
 
     @Override
-    public Author edit(Long id, AuthorDto AuthorDto) {
+    public Optional<Author> edit(Long id, AuthorDto AuthorDto) {
         Author author = this.authorRepository.findById(id).orElseThrow(AuthorIdNotVaildExcepion::new);
 
         author.setName(AuthorDto.getName());
         author.setSurname(AuthorDto.getSurname());
-        author.setCountry(countryService.findById(AuthorDto.getCountry()));
+        author.setCountry(countryService.findById(AuthorDto.getCountry()).orElseThrow(CountryIdNotFoundException::new));
 
-        return authorRepository.save(author);
+        return Optional.of(authorRepository.save(author));
     }
 
     @Override

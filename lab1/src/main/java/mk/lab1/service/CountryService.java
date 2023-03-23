@@ -7,22 +7,23 @@ import mk.lab1.model.dto.CountryDto;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CountryService {
     List <Country> findAll();
 
-    Country findById(Long id);
+    Optional<Country> findById(Long id);
 
-    Country findByName(String name);
+    Optional<Country> findByName(String name);
 
-    Country save(String name, String Continent);
+    Optional<Country> save(String name, String Continent);
 
-    Country save(CountryDto CountryDto);
+    Optional<Country> save(CountryDto CountryDto);
 
-    Country edit(Long id,String name, String Continent);
+    Optional<Country> edit(Long id,String name, String Continent);
 
-    Country edit(Long id, CountryDto CountryDto);
+    Optional<Country> edit(Long id, CountryDto CountryDto);
 
     void deleteById(Long id);
 }

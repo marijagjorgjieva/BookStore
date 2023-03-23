@@ -4,6 +4,8 @@ import mk.lab1.model.Author;
 import mk.lab1.model.Book;
 import mk.lab1.model.Category;
 import mk.lab1.model.dto.BookDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,4 +29,6 @@ public interface BookService {
     void deleteById(Long id);
 
     Optional<Book> markAsTaken(Long id);
+
+    Page<Book> findAllWithPagination(Pageable pageable);
 }

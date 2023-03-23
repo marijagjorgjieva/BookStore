@@ -10,6 +10,8 @@ import mk.lab1.model.exceptions.BookIdNotFoundException;
 import mk.lab1.repository.BookRepository;
 import mk.lab1.service.AuthorService;
 import mk.lab1.service.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -107,6 +109,10 @@ public class BookServiceImpl implements BookService {
 
 
         return Optional.of(this.bookRepository.save(book));
+    }
+    @Override
+    public Page<Book> findAllWithPagination(Pageable pageable) {
+        return this.bookRepository.findAll(pageable);
     }
 
 }

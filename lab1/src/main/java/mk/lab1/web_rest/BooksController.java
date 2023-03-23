@@ -4,6 +4,7 @@ import mk.lab1.model.Book;
 import mk.lab1.model.Category;
 import mk.lab1.model.dto.BookDto;
 import mk.lab1.service.BookService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,6 +78,12 @@ public class BooksController {
     public List<Category> getCategories() {
         return Arrays.asList(Category.values());
     }
+
+    @GetMapping("/pagination")
+    public List<Book> findAllWithPagination(Pageable pageable) {
+        return this.bookService.findAllWithPagination(pageable).getContent();
+    }
+
 
 
 }

@@ -7,6 +7,7 @@ import mk.lab1.model.dto.BookDto;
 import mk.lab1.model.exceptions.AuthorIdNotVaildExcepion;
 import mk.lab1.model.exceptions.BookNameNotFoundException;
 import mk.lab1.model.exceptions.BookIdNotFoundException;
+import mk.lab1.model.exceptions.BookNotAvailableCopiesException;
 import mk.lab1.repository.BookRepository;
 import mk.lab1.service.AuthorService;
 import mk.lab1.service.BookService;
@@ -105,8 +106,11 @@ public class BookServiceImpl implements BookService {
         Book book = this.bookRepository.findById(id).orElseThrow(BookIdNotFoundException::new);
 
 
-        book.setAvailableCopies(book.getAvailableCopies()-1);
-
+        if(book.getAvailableCopies()>=1) {
+            book.setAvailableCopies(book.getAvailableCopies() - 1);
+        }
+        else
+            throw new BookNotAvailableCopiesException();
 
         return Optional.of(this.bookRepository.save(book));
     }

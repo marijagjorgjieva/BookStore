@@ -1,6 +1,5 @@
 package mk.lab1.service;
 
-import mk.lab1.model.Author;
 import mk.lab1.model.Book;
 import mk.lab1.model.Category;
 import mk.lab1.model.dto.BookDto;

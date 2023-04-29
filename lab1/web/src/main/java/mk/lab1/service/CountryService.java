@@ -1,8 +1,6 @@
 package mk.lab1.service;
 
-import mk.lab1.model.Category;
 import mk.lab1.model.Country;
-import mk.lab1.model.dto.CountryDto;
 import mk.lab1.model.dto.CountryDto;
 
 
